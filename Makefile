@@ -6,63 +6,51 @@
 #    By: famendes <famendes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/27 15:56:51 by famendes          #+#    #+#              #
-#    Updated: 2024/06/27 17:38:49 by famendes         ###   ########.fr        #
+#    Updated: 2024/08/21 18:49:53 by famendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME		=	fdf
-LIBFT		=	libft/
-MLX			=	minilibx/
-LIBFT_A		=	$(addprefix $(LIBFT), libft.a)
-MLX_A		=	$(addprefix $(MLX), libmlx.a)
+SRCS	= start.c fdf.c
 
-CC			=	gcc
-INCLUDE 	=	includes
-CFLAGS		=	-Wall -Wextra -Werror -I$(INCLUDE)
-RM			=	rm -f
-SRCS		=	fdf.c \
+OBJS	:= $(SRCS:%.c=%.o)
 
-OBJS		=	$(SRCS:%.c=%.o)
+NAME	= fdf
 
-all:			$(NAME)
+CC		= cc -Wall -Wextra -Werror -g
+RM		= rm -f
 
-$(NAME):		$(OBJS) $(LIBFT_A) $(MLX_A)
-				@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -L$(MLX) -lmlx -lm -o $(NAME) -framework OpenGL -framework AppKit
-				@echo "Linked Successfully \033[0;32mfdf\033[0m."
+CFLAGS 	= -Wall -Wextra -Werror #-fsanitize=address
 
-$(LIBFT_A):
-				@$(MAKE) -s -C $(LIBFT)
-				@echo "Compiled $(LIBFT_A)."
+all:		${NAME}
 
-$(MLX_A):
-				@$(MAKE) -s -C $(MLX)
-				@echo "Compiled $(MLX_A)."
+%.o:	%.c
+		${CC} ${CFLAGS} -ILibft -Iprintf -I./minilibx -c $< -o $@
 
-bonus:			all
+${NAME}:		${OBJS}
+		@make -C Libft
+		@make -C printf
+		@make -C minilibx
+		${CC} ${CFLAGS} $^ -LLibft -lft -Lprintf -lftprintf -L./minilibx -lmlx  -o ${NAME}
 
-.c.o:
-				@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
-				@echo "Compiling $<."
+libft:
+		make -C Libft
 
-localclean:
-				@$(RM) $(OBJS)
-				@echo "Removed object files."
+printf:
+		make -C printf
 
-clean:			localclean
-				@$(MAKE) clean -s -C $(LIBFT)
-				@echo "Clean libft."
-				@$(MAKE) clean -s -C $(MLX)
-				@echo "Clean mlx."
+minilibx:
+		make -C minilibx
 
-fclean:			localclean
-				@$(MAKE) fclean -s -C $(LIBFT)
-				@echo "Full clean libft."
-				@$(MAKE) clean -s -C $(MLX)
-				@echo "Clean mlx."
-				@$(RM) $(NAME)
-				@echo "Removed executable."
+clean:
+			make clean -C Libft
+			make clean -C printf
+			make clean -C minilibx
+			${RM} ${OBJS}
 
-re:				fclean all
+fclean:		clean
+			${RM} ${NAME}
 
-.PHONY:			all clean fclean re localclean bonus
+re:			fclean all
+
+.PHONY:		Libft printf

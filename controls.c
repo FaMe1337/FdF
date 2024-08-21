@@ -1,20 +1,22 @@
 #include "fdf.h"
 
 //esc bottom
-int	close_window(int keysim, t_data *count_values)
+int	close_window(int keysim, t_data *data)
 {
-	if (keysim == 0xff1b){
-		mlx_destroy_window(count_values->mlx, count_values->mlx_win);
-		mlx_destroy_display(count_values->mlx);	
-		free(count_values->mlx);
-		exit(0);
+	if (keysim == XK_Escape)
+	{
+		mlx_destroy_window(data->mlx, data->mlx_win);
+		mlx_destroy_display(data->mlx);	
+		free(data->mlx);
+		exit(1);
 	}
+	printf ("the %d key has been pressed\n", keysim);
 	return 0;
 }
 
-//mouse press em standy
-int	mouse_press(int button, int x, int y, void *param)
-{
+//mouse press em standyimg.img = mlx_new_image(img.mlx, 1200, 1000);
+/* int	mouse_press(int button, int x, int y, void *param)
+{img.img = mlx_new_image(img.mlx, 1200, 1000);
 	t_data	*img;
 
 	(void)x;
@@ -25,19 +27,5 @@ int	mouse_press(int button, int x, int y, void *param)
 	else if (button == MOUSE_LEFT_BUTTON)
 		img->mouse->is_pressed = true;
 	return (0);
-}
-//zoom em standy
-void	zoom(int key, t_data *img)
-{
-	if (key == NUM_PAD_PLUS ||
-		key == MAIN_PAD_PLUS ||
-		key == MOUSE_SCROLL_UP)
-		img->camera->zoom++;
-	else if (key == NUM_PAD_MINUS ||
-		key == MAIN_PAD_MINUS ||
-		key == MOUSE_SCROLL_DOWN)
-		img->camera->zoom--;
-	if (img->camera->zoom < 1)
-		img->camera->zoom = 1;
-	draw(img->map, img);
-}
+} */
+
