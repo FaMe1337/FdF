@@ -6,14 +6,14 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:29:29 by famendes          #+#    #+#             */
-/*   Updated: 2024/08/23 18:49:39 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:29:06 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 //check if map is .fdf ext
-int	check_extension(t_data *data)
+void	check_extension(t_data *data)
 {
 	int len;
 
@@ -21,7 +21,7 @@ int	check_extension(t_data *data)
 	if (len < 4)
 		error("Wrong map extension", data);
 	if (ft_strncmp(data->map_path + len - 4, ".fdf", 4) == 0)
-		return(1);
+		return;
 	error("Wrong map extension", data);
 }
 
@@ -60,9 +60,9 @@ void	check_map_is_square(t_data *data)
 {
 	int		fd;
 	int		x;
+	int		y;
 	char	*line;
 	char	**tab;
-	int		x1;
 
 	fd = open(data->map_path, O_RDONLY);
 	line = get_next_line(fd);
@@ -73,9 +73,9 @@ void	check_map_is_square(t_data *data)
 		x = 0;
 		while (tab[x] && *tab[x] != '\n')
 			x++;
-		x1 = 0;
-		while (tab[x1])
-			free(tab[x1++]);
+		y = 0;
+		while (tab[y])
+			free(tab[y++]);
 		free(tab);
 		if (x != data->map_wcount)
 			error("Wrong map format", data);
@@ -91,38 +91,39 @@ void	copy_map(t_data *data)
 	int		fd;
 	char	*line;
 	char	**tab;
+	int		y;
 
+	y = 0;
 	fd = open(data->map_path, O_RDONLY);
 	data->map = malloc (data->map_hcount * sizeof(int *));
 	if (!data->map)
 		error("Failed Malloc creating matrix for map", data);
-	while (data->y < data->map_hcount)
+	while (y < data->map_hcount)
 	{
-		data->map[data->y] = malloc(data->map_wcount * sizeof(int));
-		if (!data->map[data->y])
+		data->map[y] = malloc(data->map_wcount * sizeof(int));
+		if (!data->map[y])
 			error("Failed malloc while copying map", data);
 		line = get_next_line(fd);
 		tab = ft_split(line, ' ');
 		free(line);
-		data->x = 0;
-		clean_and_copy(data, tab);
-		data->y++;
+		clean_and_copy(data, tab, y);
+		y++;
 		free(tab);
 	}
 }
 
-void clean_and_copy(t_data *data, char **tab)
+void clean_and_copy(t_data *data, char **tab, int y)
 {
 	int	x;
 
 	x = 0;
 	while (tab[x] && *tab[x] != '\n')
 	{
-		data->map[data->y][data->x] = ft_atoi(tab[data->x]);
+		data->map[y][x] = ft_atoi(tab[x]);
 		x++;
-		data->x++;
 	}
 	x = 0;
 	while (tab[x])
 		free(tab[x++]);
 }
+
