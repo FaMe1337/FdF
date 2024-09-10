@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/10 11:33:49 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/10 11:33:51 by famendes         ###   ########.fr       */
+/*   Created: 2024/06/27 15:23:48 by famendes          #+#    #+#             */
+/*   Updated: 2024/09/10 17:55:27 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
+# include <unistd.h> 
 # include <math.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
@@ -23,8 +23,8 @@
 # include "Libft/libft.h"
 # include "printf/ft_printf.h"
 
-# define WINDOW_WIDTH 1280
-# define WINDOW_HEIGHT 720
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 
 typedef struct s_ipoint{
 	int	x;
@@ -49,19 +49,12 @@ typedef struct	s_data {
 	int		map_wcount;
 	int		map_hcount;
 	int		**map;
-	//t_mouse	*mouse;
+	int		c_y;
+	int		c_x;
+	int		i;
 	t_ipoint	*initial_points;
 	t_fpoint	*final_points;
 }				t_data;
-
-typedef struct			s_mouse
-{
-	char				is_pressed;
-	int					x;
-	int					y;
-	int					previous_x;
-	int					previous_y;
-}						t_mouse;
 
 //error
 void	error(char *message, t_data *data);
@@ -74,6 +67,12 @@ void	two_d_point(t_data *data);
 void	mlx_display(t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	draw_line(t_data *data, t_fpoint point0, t_fpoint point1);
+
+//limits
+void	limits(t_data *data);
+void	low_limit(t_data *data);
+void	no_limit(t_data *data);
+void	right_limit(t_data *data);
 
 //controls ui
 /* int		mouse_press(int button, int x, int y, void *param); */

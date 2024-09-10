@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:29:29 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/09 14:33:54 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:08:40 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,3 @@ void clean_and_copy(t_data *data, char **tab, int y)
 	while (tab[x])
 		free(tab[x++]);
 }
-

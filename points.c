@@ -5,12 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 15:41:02 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/10 11:15:39 by famendes         ###   ########.fr       */
+/*   Created: 2024/09/04 14:01:16 by famendes          #+#    #+#             */
+/*   Updated: 2024/09/10 18:51:18 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <math.h>
 
 void	three_d_point(t_data *data) //memoria allocada para initial_points
 {
@@ -34,10 +35,7 @@ void	three_d_point(t_data *data) //memoria allocada para initial_points
 		}
 		y++;
 	}
-	i = 0;
-	//clean_map(data);
 }
-
 
 
 void	two_d_point(t_data *data) //memoria allocada para final_points
@@ -45,6 +43,7 @@ void	two_d_point(t_data *data) //memoria allocada para final_points
 	int i;
 
 	i = 0;
+	float angle = 7.37;
 	data->final_points = malloc(data->map_hcount * data->map_wcount * sizeof(t_fpoint));
 	if (!data->final_points)
 		error("Malloc for 2d points failed", data);
@@ -52,8 +51,8 @@ void	two_d_point(t_data *data) //memoria allocada para final_points
 	{
 		/* data->final_points[i].x = WINDOW_WIDTH  / 2 + 40 * (data->initial_points[i].x * cos(120) + data->initial_points[i].y * cos(120 + 2) + data->initial_points[i].z  * cos(120 - 2));
 		data->final_points[i].y = WINDOW_HEIGHT / 4  + 40 * (data->initial_points[i].x * sin(120) + data->initial_points[i].y * sin(120 + 2) + data->initial_points[i].z * sin(120 - 2)); */
-		data->final_points[i].x = (data->initial_points[i].x - data->initial_points[i].y) * cos(0.663599);
-		data->final_points[i].y = (data->initial_points[i].x + data->initial_points[i].y) * sin(0.663599) - data->initial_points[i].z;
+		data->final_points[i].x = WINDOW_WIDTH / 2 + 25 * (data->initial_points[i].x - data->initial_points[i].z); //* 0.866);
+		data->final_points[i].y = WINDOW_HEIGHT / 2 + 25 * (data->initial_points[i].y + (data->initial_points[i].x + data->initial_points[i].z)); //* 0.5));
 		i++;
 	}
 	i = 0;
@@ -62,8 +61,3 @@ void	two_d_point(t_data *data) //memoria allocada para final_points
 		i++;
 	}
 }
-
-/* void draw_line(t_data data, t_fpoint point0, t_fpoint point1)//point0 = 1 point1 = i *+ 1
-{
-
-} */

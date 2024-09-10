@@ -5,13 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/09 14:31:11 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/09 14:31:12 by famendes         ###   ########.fr       */
+/*   Created: 2024/09/04 13:55:09 by famendes          #+#    #+#             */
+/*   Updated: 2024/09/04 17:32:28 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
 
 //esc bottom
 int		close_window(t_data *data)
@@ -33,3 +32,4 @@ int		key_press(int keycode, t_data *data)
 		close_window(data);
 	return (0);
 }
+

@@ -5,12 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 14:10:35 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/09 14:32:31 by famendes         ###   ########.fr       */
+/*   Created: 2024/08/28 12:38:19 by famendes          #+#    #+#             */
+/*   Updated: 2024/09/10 17:59:16 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
 #include "fdf.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -39,8 +38,9 @@ void	mlx_display(t_data *data)
 	//putting pixels in win
 	three_d_point(data); //memoria alocada para initial points
 	two_d_point(data); //memoria alocada para final points
+	//limits(data);
 	//hooks
- 	int i = 0;
+	int i = 0;
 	while (i < data->map_hcount * data->map_wcount)
 	{
 		my_mlx_pixel_put(data, data->final_points[i].x, data->final_points[i].y, 0xFFFFFF);
