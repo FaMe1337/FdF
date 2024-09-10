@@ -6,11 +6,12 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:29:29 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/02 16:29:06 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/09 14:33:54 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
 
 //check if map is .fdf ext
 void	check_extension(t_data *data)

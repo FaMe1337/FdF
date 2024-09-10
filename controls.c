@@ -1,8 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   controls.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/09 14:31:11 by famendes          #+#    #+#             */
+/*   Updated: 2024/09/09 14:31:12 by famendes         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
+
 
 //esc bottom
 int		close_window(t_data *data)
 {
+		free(data->final_points);
+		free(data->initial_points);
 		clean_map(data);
 		mlx_destroy_image(data->mlx, data->img);
 		mlx_destroy_window(data->mlx, data->mlx_win);
@@ -14,6 +29,7 @@ int		close_window(t_data *data)
 // é aqui que vou dizer o que faz cada tecla
 int		key_press(int keycode, t_data *data)
 {
-	if (keycode = XK_Escape)
+	if (keycode == XK_Escape)
 		close_window(data);
+	return (0);
 }
