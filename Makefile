@@ -6,12 +6,12 @@
 #    By: famendes <famendes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/27 15:56:51 by famendes          #+#    #+#              #
-#    Updated: 2024/08/21 18:49:53 by famendes         ###   ########.fr        #
+#    Updated: 2024/09/11 13:06:54 by famendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-SRCS	= start.c fdf.c
+SRCS	= start.c fdf.c mlx.c controls.c points.c
 
 OBJS	:= $(SRCS:%.c=%.o)
 
@@ -25,13 +25,13 @@ CFLAGS 	= -Wall -Wextra -Werror #-fsanitize=address
 all:		${NAME}
 
 %.o:	%.c
-		${CC} ${CFLAGS} -ILibft -Iprintf -I./minilibx -c $< -o $@
+		${CC} ${CFLAGS} -ILibft -Iprintf -Iminilibx -c $< -o $@
 
 ${NAME}:		${OBJS}
 		@make -C Libft
 		@make -C printf
 		@make -C minilibx
-		${CC} ${CFLAGS} $^ -LLibft -lft -Lprintf -lftprintf -L./minilibx -lmlx  -o ${NAME}
+		${CC} ${CFLAGS} $^ -LLibft -lft -Lprintf -lftprintf -Lminilibx -lmlx_Linux -lX11 -lm -lXext  -o ${NAME}
 
 libft:
 		make -C Libft

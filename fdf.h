@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:23:48 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/10 17:55:27 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/11 18:33:28 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_ipoint{
 }				t_ipoint;
 
 typedef struct s_fpoint{
-	int	x;
-	int y;
+	float	x;
+	float	y;
 }				t_fpoint;
 
 typedef struct	s_data {
@@ -49,24 +49,31 @@ typedef struct	s_data {
 	int		map_wcount;
 	int		map_hcount;
 	int		**map;
-	int		c_y;
-	int		c_x;
+	float		max_x;
+	float		max_y;
+	float		min_x;
+	float		min_y;
 	int		i;
 	t_ipoint	*initial_points;
 	t_fpoint	*final_points;
 }				t_data;
 
 //error
-void	error(char *message, t_data *data);
+void	error(char *message);
 
 //point conversion
 void	three_d_point(t_data *data);
 void	two_d_point(t_data *data);
+void get_max_and_min(t_data *data);
+void	get_max_and_min(t_data *data);
 
 // mlx related
 void	mlx_display(t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	draw_line(t_data *data, t_fpoint point0, t_fpoint point1);
+void 	draw_line_bresenham(t_fpoint point0, t_fpoint point1, t_data *data);
+void	centralize_points(t_data *data);
+
+void draw_line(t_data *data, t_fpoint point0, t_fpoint point1);
 
 //limits
 void	limits(t_data *data);
