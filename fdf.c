@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:52:49 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/11 17:31:13 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:45:58 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int ac, char **av)
 {
-	t_data	data;
+	t_data data;
 
 	data.map_path = av[1];
 	data.map_hcount = 0;
@@ -30,21 +30,11 @@ int	main(int ac, char **av)
 	}
 	else
 		error("Wrong number of arguments");
+	//limpar mapa se for precisso
 }
-
 //print the error msg
 void	error(char *error_message)
 {
 	ft_printf("%s\n", error_message);
 	exit (1);
-}
-
-void	clean_map(t_data *data)
-{
-	int	y;
-
-	y = 0;
-	while (y < data->map_hcount)
-		free(data->map[y++]);
-	free(data->map);
 }

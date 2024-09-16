@@ -5,11 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 12:38:19 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/11 18:44:25 by famendes         ###   ########.fr       */
+/*   Created: 2024/06/27 14:10:35 by famendes          #+#    #+#             */
+/*   Updated: 2024/09/14 15:15:22 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "fdf.h"
 #include "fdf.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -35,43 +36,12 @@ void	mlx_display(t_data *data)
 	if (!data->img)
 		error("Mlx img creation failed");
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
-	three_d_point(data); //memoria alocada para initial points
-	two_d_point(data); //memoria alocada para final points
-	//draw_line(data);
-	int i = 0;
-	while (i + 1 < data->map_wcount * data->map_hcount)
-	{
-		draw_line(data, data->final_points[i], data->final_points[i + 1]);
-		i++;
-	}
+	//putting pixels in win
+	three_d_point(data);
+	two_d_point(data);
+	draw(data);
+	//hooks
 	mlx_key_hook(data->mlx_win, key_press, data);
 	mlx_hook(data->mlx_win, 17, 0, close_window, data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
-}
-
-void	draw_line(t_data *data, t_fpoint point0, t_fpoint point1)
-{	
-	int		step;
-	float	dx = point1.x - point0.x;
-	float	dy = point1.y - point0.y;
-	float	xin;
-	float	yin;
-	float	x;
-	float	y;
-
-	if (fabs(dx) > fabs(dy))
-		step = fabs(dx);
-	else
-		step = fabs(dy);
-	xin = dx / step;
-	yin = dy / step;
-	x = point0.x;
-	y = point0.y;
-	int i = 0;
-	while (i <= step)
-	{
-		my_mlx_pixel_put(data, round(x), round(y), 0xFFFFFF);
-		x += xin;
-		y += yin;
-	}
 }

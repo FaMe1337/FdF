@@ -3,95 +3,112 @@
 /*                                                        :::      ::::::::   */
 /*   points.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
+/*   B[1]: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 14:01:16 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/11 18:03:42 by famendes         ###   ########.fr       */
+/*   Created: 2024/09/02 15:41:02 b[1] famendes          #+#    #+#             */
+/*   Updated: 2024/09/12 22:56:44 b[1] famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <math.h>
 
-void	three_d_point(t_data *data) //memoria allocada para initial_points
+void	three_d_point(t_data *data) //memoria allocada para ipoints
 {
-	int	i;
 	int x;
 	int	y;
 
-	i = 0;
-	data->initial_points = malloc(data->map_hcount * data->map_wcount * sizeof(t_ipoint));
-	if (!data->initial_points)
+	data->ipoints = malloc(data->map_hcount * sizeof(t_ipoint *));
+	if (!data->ipoints)
 		error("Malloc for 3D points failed");
 	y = 0;
 	while (y < data->map_hcount)
 	{
+		data->ipoints[y] = malloc(data->map_wcount * sizeof(t_ipoint));
 		x = 0;
 		while (x < data->map_wcount)
 		{
-			data->initial_points[i] = (t_ipoint){x, y, data->map[y][x]};
-			i++;
+			data->ipoints[y][x] = (t_ipoint){x, y, data->map[y][x]};
 			x++;
 		}
 		y++;
 	}
 }
 
-void	two_d_point(t_data *data) //memoria allocada para final_points
+void	two_d_point(t_data *data) //memoria allocada para fpoints
 {
 	int i;
+	int j;
+	float angle;
 
-	i = 0;
-	float angle = (30 * M_PI/180);
-	data->final_points = malloc(data->map_hcount * data->map_wcount * sizeof(t_fpoint));
-	if (!data->final_points)
+	j = 0;
+	angle = (30 * M_PI/180);
+	data->fpoints = malloc(data->map_hcount * sizeof(t_fpoint *));
+	if (!data->fpoints)
 		error("Malloc for 2d points failed");
-	while (i < data->map_hcount * data->map_wcount)
+	while (j < data->map_hcount)
 	{
-		data->final_points[i].x = (data->initial_points[i].x * cos(angle) + data->initial_points[i].y * cos(angle + 2) + data->initial_points[i].z * cos(angle - 2));
-		data->final_points[i].y = (data->initial_points[i].x * sin(angle) + data->initial_points[i].y * sin(angle + 2) + data->initial_points[i].z * sin(angle - 2));
-		data->final_points[i].x *= 25;
-		data->final_points[i].y *= 25;
-		i++;
+		data->fpoints[j] = malloc(data->map_wcount * sizeof(t_fpoint));
+		i = 0;
+		while (i < data->map_wcount)
+		{
+			data->fpoints[j][i].x = (data->ipoints[j][i].x - data->ipoints[j][i].y) * cos(angle);
+			data->fpoints[j][i].y = (data->ipoints[j][i].x + data->ipoints[j][i].y) * sin(angle) - (data->ipoints[j][i].z);
+			data->fpoints[j][i].x *= 2;
+			data->fpoints[j][i].y *= 2;
+			i++;
+		}
+		j++;
 	}
-	get_max_and_min(data);
+ 	get_max_and_min(data);
 	centralize_points(data);
 }
 
 void	get_max_and_min(t_data *data)
 {
 	int	i;
+	int j;
 
-	i = 0;
-	data->max_x = data->final_points[i].x;
-	data->min_x = data->final_points[i].x;
-	data->max_y = data->final_points[i].y;
-	data->min_y = data->final_points[i].y;
-	while (i + 1 < data->map_hcount * data->map_wcount)
+	j = 0;
+	data->max_x = data->fpoints[j][0].x;
+	data->min_x = data->fpoints[j][0].x;
+	data->max_y = data->fpoints[j][0].y;
+	data->min_y = data->fpoints[j][0].y;
+	while (j < data->map_hcount)
 	{
-		if (data->final_points[i].x < data->final_points[i + 1].x)
-			data->max_x = data->final_points[i + 1].x;
-		if (data->final_points[i].x > data->final_points[i + 1].x)
-			data->min_x = data->final_points[i + 1].x;
-		if (data->final_points[i].y < data->final_points[i + 1].y)
-			data->max_y = data->final_points[i + 1].y;
-		if (data->final_points[i].y > data->final_points[i + 1].y)
-			data->min_y = data->final_points[i + 1].y;
-		i++;
+		i = 0;
+		while (i + 1 < data->map_wcount)
+		{
+			if (data->fpoints[j][i].x < data->fpoints[j][i + 1].x)
+				data->max_x = data->fpoints[j][i + 1].x;
+			if (data->fpoints[j][i].x > data->fpoints[j][i + 1].x)
+				data->min_x = data->fpoints[j][i + 1].x;
+			if (data->fpoints[j][i].y < data->fpoints[j][i + 1].y)
+				data->max_y = data->fpoints[j][i + 1].y;
+			if (data->fpoints[j][i].y > data->fpoints[j][i + 1].y)
+				data->min_y = data->fpoints[j][i + 1].y;
+			i++;
+		}
+		j++;
 	}
 }
 
 void	centralize_points(t_data *data)
 {
 	int	i;
+	int j;
 
-	i = 0;
-	while (i < data->map_hcount * data->map_wcount)
+	j = 0;
+	while (j < data->map_hcount)
 	{
-		data->final_points[i].x += (WINDOW_WIDTH / 1.75)
+		i = 0;
+		while (i < data->map_wcount)
+		{
+			data->fpoints[j][i].x += (WINDOW_WIDTH / 2)
 			- (data->max_x - data->min_x) / 2;
-		data->final_points[i].y += (WINDOW_HEIGHT / 2.5)
+			data->fpoints[j][i].y += (WINDOW_HEIGHT / 2)
 			- (data->max_y - data->min_y) / 2;
-		i++;
+			i++;
+		}
+		j++;
 	}
 }

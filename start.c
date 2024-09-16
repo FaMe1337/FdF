@@ -6,22 +6,23 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:29:29 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/11 17:28:09 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:27:13 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+
 //check if map is .fdf ext
 void	check_extension(t_data *data)
 {
-	int	len;
+	int len;
 
 	len = ft_strlen(data->map_path);
 	if (len < 4)
 		error("Wrong map extension");
 	if (ft_strncmp(data->map_path + len - 4, ".fdf", 4) == 0)
-		return ;
+		return;
 	error("Wrong map extension");
 }
 
@@ -31,9 +32,8 @@ void	get_map_size(t_data *data)
 	int		fd;
 	char	*line;
 	char	**tab;
-	int		x;
+	int x = 0;
 
-	x = 0;
 	fd = open(data->map_path, O_RDONLY);
 	if (fd < 0)
 		error("Invalid FD");
@@ -52,6 +52,7 @@ void	get_map_size(t_data *data)
 		data->map_hcount++;
 		line = get_next_line(fd);
 	}
+	free(line);
 	close(fd);
 }
 
@@ -81,6 +82,7 @@ void	check_map_is_square(t_data *data)
 			error("Wrong map format");
 		line = get_next_line(fd);
 	}
+	free(line);
 	close(fd);
 }
 
@@ -111,7 +113,7 @@ void	copy_map(t_data *data)
 	}
 }
 
-void	clean_and_copy(t_data *data, char **tab, int y)
+void clean_and_copy(t_data *data, char **tab, int y)
 {
 	int	x;
 
@@ -125,3 +127,4 @@ void	clean_and_copy(t_data *data, char **tab, int y)
 	while (tab[x])
 		free(tab[x++]);
 }
+
