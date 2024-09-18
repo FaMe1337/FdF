@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:31:11 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/16 12:46:02 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:43:14 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,4 @@ int		close_window(t_data *data)
 		exit(0);
 }
 
-void	clean_maps(t_data *data)
-{
-	int	y;
-
-	y = 0;
-	while (y < data->map_hcount)
-			free(data->map[y++]);
-	free(data->map);
-	y = 0;
-	while (y < data->map_hcount)
-		free(data->ipoints[y++]);
-	free(data->ipoints);
-	y = 0;
-	while (y < data->map_hcount)
-		free(data->fpoints[y++]);
-	free(data->fpoints);
-}
 

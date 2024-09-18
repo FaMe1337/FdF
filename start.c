@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:29:29 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/12 15:27:13 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:50:36 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	copy_map(t_data *data)
 		free(tab);
 	}
 }
-
+//ler se z tiver cor, TODO
 void clean_and_copy(t_data *data, char **tab, int y)
 {
 	int	x;
@@ -121,6 +121,7 @@ void clean_and_copy(t_data *data, char **tab, int y)
 	while (tab[x] && *tab[x] != '\n')
 	{
 		data->map[y][x] = ft_atoi(tab[x]);
+		//ler mapa para ver se tem , e cor
 		x++;
 	}
 	x = 0;

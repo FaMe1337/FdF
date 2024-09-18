@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 16:14:18 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/16 12:31:15 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:22:34 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void draw(t_data *data)
     int x;
     int y;
 
+	three_d_point(data);
+	two_d_point(data);
     y = 0;
  	while (y < data->map_hcount)
 	{

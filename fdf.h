@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:33:49 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/16 12:22:30 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:15:46 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@
 # include "Libft/libft.h"
 # include "printf/ft_printf.h"
 
-# define WINDOW_WIDTH 1280
-# define WINDOW_HEIGHT 720
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1080
 
 typedef struct s_bresenham{
-	int	x0;
-	int	y0;
-	int x_step;
-	int y_step;
+	double	x0;
+	double	y0;
+	double x_step;
+	double y_step;
 	int error;
 	int max;
 }			t_bresenham;
@@ -62,7 +62,9 @@ typedef struct	s_data {
 	int		min_x;
 	int		max_y;
 	int		min_y;
-	int 	scale;
+	int		max_z;
+	int		min_z;
+	int 	zoom;
 	t_ipoint	**ipoints;
 	t_fpoint	**fpoints;
 }				t_data;
@@ -74,6 +76,11 @@ void	error(char *message);
 //point conversion
 void	three_d_point(t_data *data);
 void	two_d_point(t_data *data);
+int		get_zoom(t_data *data);
+void	centralize_points(t_data *data);
+void	get_max_and_min(t_data *data);
+float	calculate_factor(t_data *data);
+float get_z_scale(t_data *data);
 
 // mlx related
 void	mlx_display(t_data *data);
@@ -81,17 +88,14 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 //draw shenanigans
 void 	draw(t_data *data);
-void 	scale_points(int x, int y, int x1, int y1, t_data *data);
 void	centralize_points(t_data *data);
 void	get_max_and_min(t_data *data);
 int 	find_s(float x, float x1);
 void	bresenham(t_fpoint *p0, t_fpoint *p1, t_data *data);
 void	sort_struc(t_fpoint *p0, t_fpoint *p1, t_bresenham *points);
-void 	swap_points(double *pt0, double *pt1);
-//void	bresenham(int x, int y, int x1, int y1, t_data *data);
+int		ft_min(int a, int b);
 
 //controls ui
-/* int		mouse_press(int button, int x, int y, void *param); */
 int		close_window(t_data *data);
 int		key_press(int keycode, t_data *data);
 

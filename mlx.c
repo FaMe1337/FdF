@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:10:35 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/14 15:15:22 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:22:26 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void	mlx_display(t_data *data)
 		error("Mlx img creation failed");
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, &data->line_length, &data->endian);
 	//putting pixels in win
-	three_d_point(data);
-	two_d_point(data);
 	draw(data);
 	//hooks
 	mlx_key_hook(data->mlx_win, key_press, data);
