@@ -6,12 +6,12 @@
 #    By: famendes <famendes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/27 15:56:51 by famendes          #+#    #+#              #
-#    Updated: 2024/08/22 15:34:47 by famendes         ###   ########.fr        #
+#    Updated: 2024/09/18 16:31:04 by famendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-SRCS	= start.c fdf.c mlx.c controls.c
+SRCS	= start.c fdf.c mlx.c controls.c points.c utils.c draw.c
 
 OBJS	:= $(SRCS:%.c=%.o)
 
@@ -31,7 +31,7 @@ ${NAME}:		${OBJS}
 		@make -C Libft
 		@make -C printf
 		@make -C minilibx
-		${CC} ${CFLAGS} $^ -LLibft -lft -Lprintf -lftprintf -Lminilibx -lmlx  -o ${NAME}
+		${CC} ${CFLAGS} $^ -LLibft -lft -Lprintf -lftprintf -Lminilibx -lmlx_Linux -lX11 -lm -lXext  -o ${NAME}
 
 libft:
 		make -C Libft
@@ -53,4 +53,4 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:		Libft printf minilibx
+.PHONY:		Libft printf

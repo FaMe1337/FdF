@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   points.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   B[1]: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 15:41:02 b[1] famendes          #+#    #+#             */
-/*   Updated: 2024/09/12 22:56:44 b[1] famendes         ###   ########.fr       */
+/*   Created: 2024/09/04 14:01:16 by famendes          #+#    #+#             */
+/*   Updated: 2024/09/18 18:22:52 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <math.h>
 
 void	three_d_point(t_data *data)
 {
-	int x;
+	int	x;
 	int	y;
 
 	data->ipoints = malloc(data->map_hcount * sizeof(t_ipoint *));
@@ -32,15 +33,16 @@ void	three_d_point(t_data *data)
 		}
 		y++;
 	}
+	data->z_scale = get_z_scale(data);
 }
 
 void	two_d_point(t_data *data)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 	float	angle;
 
-	angle = 30 * M_PI/180;
+	angle = 30 * M_PI / 180;
 	j = -1;
 	data->fpoints = malloc(data->map_hcount * sizeof(t_fpoint *));
 	if (!data->fpoints)
@@ -50,23 +52,23 @@ void	two_d_point(t_data *data)
 		data->fpoints[j] = malloc(data->map_wcount * sizeof(t_fpoint));
 		if (!data->fpoints)
 			error("Malloc for 2d collums points failed");
-		i = 0;
-		while (i < data->map_wcount)
+		i = -1;
+		while (++i < data->map_wcount)
 		{
-			data->fpoints[j][i].x = ((data->ipoints[j][i].x - data->ipoints[j][i].y) * cos(angle))
-			* get_zoom(data);
-			data->fpoints[j][i].y = ((data->ipoints[j][i].x + data->ipoints[j][i].y) * sin(angle)
-				- (data->ipoints[j][i].z * get_z_scale(data))) * get_zoom(data);
-			i++;
+			data->fpoints[j][i].x = ((data->ipoints[j][i].x
+						- data->ipoints[j][i].y) * cos(angle)) * get_zoom(data);
+			data->fpoints[j][i].y = ((data->ipoints[j][i].x
+						+ data->ipoints[j][i].y) * sin(angle)
+					- (data->ipoints[j][i].z * data->z_scale)) * get_zoom(data);
 		}
 	}
 	centralize_points(data);
 }
 
-float get_z_scale(t_data *data)
+float	get_z_scale(t_data *data)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
 	data->max_z = data->ipoints[y][0].z;
@@ -90,7 +92,7 @@ float get_z_scale(t_data *data)
 void	centralize_points(t_data *data)
 {
 	int	i;
-	int j;
+	int	j;
 
 	j = 0;
 	get_max_and_min(data);
@@ -99,19 +101,20 @@ void	centralize_points(t_data *data)
 		i = 0;
 		while (i < data->map_wcount)
 		{
-			data->fpoints[j][i].x += (WINDOW_WIDTH / 2)
-			- (data->max_x - data->min_x) / 2;
-			data->fpoints[j][i].y += (WINDOW_HEIGHT / 2)
-			- (data->max_y - data->min_y) / 2;
+			data->fpoints[j][i].x += ((WINDOW_WIDTH / 2)
+				- (data->max_x - data->min_x) / 2) + data->move_x; // + data->pos_w
+			data->fpoints[j][i].y += ((WINDOW_HEIGHT / 2)
+				- (data->max_y - data->min_y) / 2) + data->move_y; // +  data->pos_h;
 			i++;
 		}
 		j++;
 	}
+	printf("o x e: %d\n", data->move_x);
 }
 
 int	get_zoom(t_data *data)
 {
 	data->zoom = ft_min(WINDOW_WIDTH / data->map_wcount / 2,
 			WINDOW_HEIGHT / data->map_hcount / 2);
-	return(data->zoom);
+	return (data->zoom);
 }

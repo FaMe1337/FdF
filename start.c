@@ -6,33 +6,32 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:29:29 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/17 15:50:36 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:40:56 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-
 //check if map is .fdf ext
 void	check_extension(t_data *data)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(data->map_path);
 	if (len < 4)
 		error("Wrong map extension");
 	if (ft_strncmp(data->map_path + len - 4, ".fdf", 4) == 0)
-		return;
+		return ;
 	error("Wrong map extension");
 }
 
 //get number columns and rows
 void	get_map_size(t_data *data)
 {
-	int		fd;
-	char	*line;
-	char	**tab;
-	int x = 0;
+	int			fd;
+	char		*line;
+	char		**tab;
+	static int	x;
 
 	fd = open(data->map_path, O_RDONLY);
 	if (fd < 0)
@@ -112,6 +111,7 @@ void	copy_map(t_data *data)
 		free(tab);
 	}
 }
+
 //ler se z tiver cor, TODO
 void clean_and_copy(t_data *data, char **tab, int y)
 {
@@ -128,4 +128,3 @@ void clean_and_copy(t_data *data, char **tab, int y)
 	while (tab[x])
 		free(tab[x++]);
 }
-

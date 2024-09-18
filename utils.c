@@ -5,13 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 14:59:23 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/18 13:43:36 by famendes         ###   ########.fr       */
+/*   Created: 2024/09/18 15:32:28 by famendes          #+#    #+#             */
+/*   Updated: 2024/09/18 17:44:00 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
 
 int	ft_min(int a, int b)
 {
@@ -26,7 +25,7 @@ void	clean_maps(t_data *data)
 
 	y = 0;
 	while (y < data->map_hcount)
-			free(data->map[y++]);
+		free(data->map[y++]);
 	free(data->map);
 	y = 0;
 	while (y < data->map_hcount)
@@ -37,9 +36,10 @@ void	clean_maps(t_data *data)
 		free(data->fpoints[y++]);
 	free(data->fpoints);
 }
-float calculate_factor(t_data *data)
+
+float	calculate_factor(t_data *data)
 {
-	int z_range;
+	int	z_range;
 
 	z_range = data->max_z - data->min_z;
 	if (z_range >= 10)
@@ -49,12 +49,13 @@ float calculate_factor(t_data *data)
 	if (z_range >= 1000)
 		return (0.001);
 	else
-	return (1);
+		return (0.9);
 }
+
 void	get_max_and_min(t_data *data)
 {
 	int	i;
-	int j;
+	int	j;
 
 	j = 0;
 	data->max_x = data->fpoints[j][0].x;
