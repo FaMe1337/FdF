@@ -6,12 +6,12 @@
 #    By: famendes <famendes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/27 15:56:51 by famendes          #+#    #+#              #
-#    Updated: 2024/09/18 16:31:04 by famendes         ###   ########.fr        #
+#    Updated: 2024/09/20 12:34:26 by famendes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-SRCS	= start.c fdf.c mlx.c controls.c points.c utils.c draw.c
+SRCS	= start.c fdf.c mlx.c controls.c points.c utils.c draw.c map_utils.c color.c
 
 OBJS	:= $(SRCS:%.c=%.o)
 
