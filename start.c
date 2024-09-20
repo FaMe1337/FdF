@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 15:29:29 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/18 17:40:56 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/20 01:29:48 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,36 +95,19 @@ void	copy_map(t_data *data)
 
 	y = 0;
 	fd = open(data->map_path, O_RDONLY);
-	data->map = malloc (data->map_hcount * sizeof(int *));
-	if (!data->map)
+	data->ipoints = malloc (data->map_hcount * sizeof(t_ipoint *));
+	if (!data->ipoints)
 		error("Failed Malloc creating matrix for map");
 	while (y < data->map_hcount)
 	{
-		data->map[y] = malloc(data->map_wcount * sizeof(int));
-		if (!data->map[y])
+		data->ipoints[y] = malloc(data->map_wcount * sizeof(t_ipoint));
+		if (!data->ipoints[y])
 			error("Failed malloc while copying map");
 		line = get_next_line(fd);
 		tab = ft_split(line, ' ');
 		free(line);
-		clean_and_copy(data, tab, y);
+		get_points(data, tab, y);
 		y++;
-		free(tab);
 	}
-}
-
-//ler se z tiver cor, TODO
-void clean_and_copy(t_data *data, char **tab, int y)
-{
-	int	x;
-
-	x = 0;
-	while (tab[x] && *tab[x] != '\n')
-	{
-		data->map[y][x] = ft_atoi(tab[x]);
-		//ler mapa para ver se tem , e cor
-		x++;
-	}
-	x = 0;
-	while (tab[x])
-		free(tab[x++]);
+	close(fd);
 }

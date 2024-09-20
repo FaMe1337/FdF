@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 12:38:19 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/18 18:11:51 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/20 01:31:17 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 void	mlx_display(t_data *data)
 {
+	data->z_scale = get_z_scale(data);
+	data->zoom = get_zoom(data);
+	data->angle = 30;
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		error("Mlx connection failed");
@@ -38,7 +41,6 @@ void	mlx_display(t_data *data)
 		error("Mlx img creation failed");
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel,
 			&data->line_length, &data->endian);
-	three_d_point(data);
 	draw(data);
 	mlx_key_hook(data->mlx_win, key_press, data);
 	mlx_hook(data->mlx_win, 17, 0, close_window, data);

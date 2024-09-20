@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:23:48 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/18 18:14:31 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/20 01:40:28 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_bresenham
 	int	y_step;
 	int	error;
 	int	max;
+	int color;
 }			t_bresenham;
 
 typedef struct s_ipoint
@@ -41,12 +42,14 @@ typedef struct s_ipoint
 	int	x;
 	int	y;
 	int	z;
+	int	z_color;
 }				t_ipoint;
 
 typedef struct s_fpoint
 {
 	int	x;
 	int	y;
+	int color;
 }				t_fpoint;
 
 typedef struct s_data
@@ -70,6 +73,7 @@ typedef struct s_data
 	int			min_z;
 	float		z_scale;
 	int			zoom;
+	int			angle;
 	int 		move_x;
 	int			move_y;
 	t_ipoint	**ipoints;
@@ -79,9 +83,10 @@ typedef struct s_data
 //error
 void	error(char *message);
 
-//point conversion
-void	three_d_point(t_data *data);
+//points shenanigans
+void	get_points(t_data *data, char **tab, int y);
 void	two_d_point(t_data *data);
+void	points_to_struct(t_data *data, int j, float angle);
 int		get_zoom(t_data *data);
 void	centralize_points(t_data *data);
 void	get_max_and_min(t_data *data);
@@ -94,7 +99,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 //draw shenanigans
 void	draw(t_data *data);
-void	centralize_points(t_data *data);
+void centralize_points(t_data *data);
 void	get_max_and_min(t_data *data);
 int		find_s(double x, double x1);
 void	bresenham(t_fpoint *p0, t_fpoint *p1, t_data *data);
@@ -107,11 +112,18 @@ int		key_press(int keycode, t_data *data);
 void	render(t_data *data);
 
 //map info
-void	clean_and_copy(t_data *data, char **tab, int y);
 void	check_extension(t_data *data);
 void	copy_map(t_data *data);
 void	get_map_size(t_data *data);
 void	check_map_is_square(t_data *data);
 void	clean_maps(t_data *data);
+int		ft_atoi_base(char *str, int base);
+int		str_is_valid(char c);
+
+//color
+int	get_color(t_fpoint *p0, t_fpoint *p1, t_bresenham *bresenham);
+double	percent(int start, int end, int current);
+int	get_light(int start, int end, double percentage);
+
 
 #endif

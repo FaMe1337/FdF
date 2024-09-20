@@ -6,61 +6,59 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:01:16 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/18 18:22:52 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:20:31 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <math.h>
 
-void	three_d_point(t_data *data)
+void get_points(t_data *data, char **tab, int y)
 {
 	int	x;
-	int	y;
+	int i;
+	char **z_and_color;
 
-	data->ipoints = malloc(data->map_hcount * sizeof(t_ipoint *));
-	if (!data->ipoints)
-		error("Malloc for 3D points failed");
-	y = 0;
-	while (y < data->map_hcount)
+	x = 0;
+	while (tab[x] && *tab[x] != '\n')
 	{
-		data->ipoints[y] = malloc(data->map_wcount * sizeof(t_ipoint));
-		x = 0;
-		while (x < data->map_wcount)
-		{
-			data->ipoints[y][x] = (t_ipoint){x, y, data->map[y][x]};
-			x++;
-		}
-		y++;
+		z_and_color = ft_split(tab[x], ',');
+		data->ipoints[y][x].x = x;
+		data->ipoints[y][x].y = y;
+		data->ipoints[y][x].z = ft_atoi(z_and_color[0]);
+		if (z_and_color[1])
+			data->ipoints[y][x].z_color = ft_atoi_base(z_and_color[1], 16);
+		else
+			data->ipoints[y][x].z_color = 0xFFFFFF;
+		i = 0;
+		while (z_and_color[i])
+			free(z_and_color[i++]);
+		free(z_and_color);
+		x++;
 	}
-	data->z_scale = get_z_scale(data);
+	x = 0;
+	while (tab[x])
+		free(tab[x++]);
+	free(tab);
 }
 
 void	two_d_point(t_data *data)
 {
-	int		i;
 	int		j;
 	float	angle;
 
-	angle = 30 * M_PI / 180;
-	j = -1;
+	angle = (data->angle * M_PI / 180);
+	j = 0;
 	data->fpoints = malloc(data->map_hcount * sizeof(t_fpoint *));
 	if (!data->fpoints)
 		error("Malloc for 2d rows points failed");
-	while (++j < data->map_hcount)
+	while (j < data->map_hcount)
 	{
 		data->fpoints[j] = malloc(data->map_wcount * sizeof(t_fpoint));
 		if (!data->fpoints)
 			error("Malloc for 2d collums points failed");
-		i = -1;
-		while (++i < data->map_wcount)
-		{
-			data->fpoints[j][i].x = ((data->ipoints[j][i].x
-						- data->ipoints[j][i].y) * cos(angle)) * get_zoom(data);
-			data->fpoints[j][i].y = ((data->ipoints[j][i].x
-						+ data->ipoints[j][i].y) * sin(angle)
-					- (data->ipoints[j][i].z * data->z_scale)) * get_zoom(data);
-		}
+		points_to_struct(data, j, angle);
+		j++;
 	}
 	centralize_points(data);
 }
@@ -102,14 +100,13 @@ void	centralize_points(t_data *data)
 		while (i < data->map_wcount)
 		{
 			data->fpoints[j][i].x += ((WINDOW_WIDTH / 2)
-				- (data->max_x - data->min_x) / 2) + data->move_x; // + data->pos_w
+				- (data->max_x - data->min_x) / 2) + data->move_x;
 			data->fpoints[j][i].y += ((WINDOW_HEIGHT / 2)
-				- (data->max_y - data->min_y) / 2) + data->move_y; // +  data->pos_h;
+				- (data->max_y - data->min_y) / 2) + data->move_y;
 			i++;
 		}
 		j++;
 	}
-	printf("o x e: %d\n", data->move_x);
 }
 
 int	get_zoom(t_data *data)

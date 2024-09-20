@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:55:09 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/18 18:23:46 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/20 01:21:02 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@ int		key_press(int keycode, t_data *data)
 		data->move_x -= 10;
 	if (keycode == XK_Right)
 		data->move_x += 10;
+	if (keycode == XK_KP_Add)
+		data->zoom /= 0.90;
+	if (keycode == XK_KP_Subtract)
+		data->zoom *= 0.90;
+	if (keycode == XK_equal)
+		data->angle += 10;
+	if (keycode == XK_minus)
+		data->angle -= 10;
+	if (keycode == XK_p)
+		data->z_scale /= 0.9;
+	if (keycode == XK_m)
+		data->z_scale *= 0.9;
 	render(data);
 	return (0);
 }
@@ -42,10 +54,16 @@ int		close_window(t_data *data)
 
 void	render(t_data *data)
 {
+	int	y;
+
+	y = 0;
 	mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!data->img)
 		error("Mlx img creation failed");
+	while (y < data->map_hcount)
+		free(data->fpoints[y++]);
+	free(data->fpoints);
 	draw(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 }
