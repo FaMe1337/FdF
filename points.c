@@ -29,7 +29,7 @@ void get_points(t_data *data, char **tab, int y)
 		if (z_and_color[1])
 			data->ipoints[y][x].z_color = ft_atoi_base(z_and_color[1], 16);
 		else
-			data->ipoints[y][x].z_color = 0xFFFFFF;
+			data->ipoints[y][x].z_color = 0x4b0082;
 		i = 0;
 		while (z_and_color[i])
 			free(z_and_color[i++]);
