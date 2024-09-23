@@ -46,7 +46,8 @@ void	bresenham(t_fpoint *p0, t_fpoint *p1, t_data *data)
 	sy = find_s(p0->y, p1->y);
 	while ((int)points.x0 != (int)p1->x && (int)points.y0 != (int)p1->y)
 	{
-		my_mlx_pixel_put(data, points.x0, points.y0, get_color(p0, p1, &points));
+		my_mlx_pixel_put(data, points.x0, points.y0,
+			get_color(p0, p1, &points));
 		points.max = 2 * points.error;
 		if (points.max > -points.y_step)
 		{

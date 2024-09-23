@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:23:48 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/20 01:40:28 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:58:09 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_bresenham
 	int	y_step;
 	int	error;
 	int	max;
-	int color;
+	int	color;
 }			t_bresenham;
 
 typedef struct s_ipoint
@@ -49,7 +49,7 @@ typedef struct s_fpoint
 {
 	int	x;
 	int	y;
-	int color;
+	int	color;
 }				t_fpoint;
 
 typedef struct s_data
@@ -72,9 +72,9 @@ typedef struct s_data
 	int			max_z;
 	int			min_z;
 	float		z_scale;
-	int			zoom;
+	double		zoom;
 	int			angle;
-	int 		move_x;
+	int			move_x;
 	int			move_y;
 	t_ipoint	**ipoints;
 	t_fpoint	**fpoints;
@@ -99,7 +99,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 //draw shenanigans
 void	draw(t_data *data);
-void centralize_points(t_data *data);
+void	centralize_points(t_data *data);
 void	get_max_and_min(t_data *data);
 int		find_s(double x, double x1);
 void	bresenham(t_fpoint *p0, t_fpoint *p1, t_data *data);
@@ -121,9 +121,8 @@ int		ft_atoi_base(char *str, int base);
 int		str_is_valid(char c);
 
 //color
-int	get_color(t_fpoint *p0, t_fpoint *p1, t_bresenham *bresenham);
+int		get_color(t_fpoint *p0, t_fpoint *p1, t_bresenham *bresenham);
 double	percent(int start, int end, int current);
-int	get_light(int start, int end, double percentage);
-
+int		get_light(int start, int end, double percentage);
 
 #endif

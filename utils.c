@@ -6,15 +6,15 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:32:28 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/20 01:31:34 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:16:28 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void points_to_struct(t_data *data, int j, float angle)
+void	points_to_struct(t_data *data, int j, float angle)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < data->map_wcount)
@@ -56,16 +56,17 @@ float	calculate_factor(t_data *data)
 
 	z_range = data->max_z - data->min_z;
 	if (z_range >= 500)
-        return 0.001;
-	if (z_range >= 250)
-        return 0.005;
-	if (z_range >= 100)
-        return 0.01;
-    if (z_range >= 50)
-        return 0.05;
-    if (z_range >= 10)
-        return 0.1;
-	return (0.9);
+		return (0.001);
+	else if (z_range >= 250)
+		return (0.005);
+	else if (z_range >= 100)
+		return (0.01);
+	else if (z_range >= 50)
+		return (0.05);
+	else if (z_range >= 10)
+		return (0.1);
+	else
+		return (0.9);
 }
 
 void	get_max_and_min(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 20:18:27 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/19 22:13:57 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:14:33 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	ft_atoi_base(char *str, int base)
 
 int	str_is_valid(char c)
 {
-	int	i;
-	char *str;
+	int		i;
+	char	*str;
 
 	str = "0123456789ABCDEFabcdef";
 	i = 0;
@@ -48,4 +48,3 @@ int	str_is_valid(char c)
 	}
 	return (0);
 }
-

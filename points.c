@@ -6,18 +6,18 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:01:16 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/20 12:20:31 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:08:15 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <math.h>
 
-void get_points(t_data *data, char **tab, int y)
+void	get_points(t_data *data, char **tab, int y)
 {
-	int	x;
-	int i;
-	char **z_and_color;
+	int		x;
+	int		i;
+	char	**z_and_color;
 
 	x = 0;
 	while (tab[x] && *tab[x] != '\n')
@@ -100,9 +100,9 @@ void	centralize_points(t_data *data)
 		while (i < data->map_wcount)
 		{
 			data->fpoints[j][i].x += ((WINDOW_WIDTH / 2)
-				- (data->max_x - data->min_x) / 2) + data->move_x;
+					- (data->max_x - data->min_x) / 2) + data->move_x;
 			data->fpoints[j][i].y += ((WINDOW_HEIGHT / 2)
-				- (data->max_y - data->min_y) / 2) + data->move_y;
+					- (data->max_y - data->min_y) / 2) + data->move_y;
 			i++;
 		}
 		j++;

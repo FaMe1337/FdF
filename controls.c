@@ -6,15 +6,14 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:55:09 by famendes          #+#    #+#             */
-/*   Updated: 2024/09/20 01:21:02 by famendes         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:09:21 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-
 // é aqui que vou dizer o que faz cada tecla
-int		key_press(int keycode, t_data *data)
+int	key_press(int keycode, t_data *data)
 {
 	if (keycode == XK_Escape)
 		close_window(data);
@@ -41,15 +40,16 @@ int		key_press(int keycode, t_data *data)
 	render(data);
 	return (0);
 }
+
 //esc bottom
-int		close_window(t_data *data)
+int	close_window(t_data *data)
 {
-		clean_maps(data);
-		mlx_destroy_image(data->mlx, data->img);
-		mlx_destroy_window(data->mlx, data->mlx_win);
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
-		exit(0);
+	clean_maps(data);
+	mlx_destroy_image(data->mlx, data->img);
+	mlx_destroy_window(data->mlx, data->mlx_win);
+	mlx_destroy_display(data->mlx);
+	free(data->mlx);
+	exit(0);
 }
 
 void	render(t_data *data)
